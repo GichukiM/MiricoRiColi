@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { products } from "../assets/assets.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +44,9 @@ const ShopContextProvider = (props) => {
           if (cartItems[items][item] > 0) {
             totalCount += cartItems[items][item];
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
     return totalCount;
@@ -69,7 +71,9 @@ const ShopContextProvider = (props) => {
               cartItems[items][item] *
               products.find((product) => product._id === items).price;
           }
-        } catch (error) {}
+        } catch (error) {
+          console.log(error);
+        }
       }
 
       return totalAmount;
