@@ -9,7 +9,7 @@ import { ShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
-  const {setShowSearch, getCartCount} = useContext(ShopContext);
+  const { setShowSearch, getCartCount } = useContext(ShopContext);
 
   return (
     <div className="flex items-center justify-between py-8 font-medium">
@@ -26,7 +26,10 @@ const Navbar = () => {
           <p>ABOUT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink to="/all-products" className="flex flex-col items-center gap-1">
+        <NavLink
+          to="/all-products"
+          className="flex flex-col items-center gap-1"
+        >
           <p>ALL PRODUCTS</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
@@ -37,10 +40,15 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-6">
-        <FaSearch onClick={() => setShowSearch(true)} className="w-8 cursor-pointer" />
+        <FaSearch
+          onClick={() => setShowSearch(true)}
+          className="w-8 cursor-pointer"
+        />
 
         <div className="group relative">
-          <CgProfile className="w-8 cursor-pointer" />
+          <Link to={'/login'}>
+            <CgProfile className="w-8 cursor-pointer" />
+          </Link>
           <div className="group-hover:block hidden absolute dropdown-menu right-o pt-4">
             <div className="flex flex-col gap-2 w-36 py-3 px-5 bg-slate-100 text-gray-500 rounded-sm">
               <p className="cursor-pointer hover:text-black">My Profile</p>
