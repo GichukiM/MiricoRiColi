@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { FaCartShopping } from "react-icons/fa6";
 import { MdMenu } from "react-icons/md";
 import { IoIosArrowDropdown } from "react-icons/io";
+import { ShopContext } from "../context/ShopContext";
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
+  const {setShowSearch, getCartCount} = useContext(ShopContext);
 
   return (
     <div className="flex items-center justify-between py-8 font-medium">
@@ -24,7 +26,7 @@ const Navbar = () => {
           <p>ABOUT</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
-        <NavLink to="/collection" className="flex flex-col items-center gap-1">
+        <NavLink to="/all-products" className="flex flex-col items-center gap-1">
           <p>ALL PRODUCTS</p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
@@ -35,7 +37,7 @@ const Navbar = () => {
       </ul>
 
       <div className="flex items-center gap-6">
-        <FaSearch className="w-8 cursor-pointer" />
+        <FaSearch onClick={() => setShowSearch(true)} className="w-8 cursor-pointer" />
 
         <div className="group relative">
           <CgProfile className="w-8 cursor-pointer" />
@@ -52,7 +54,7 @@ const Navbar = () => {
           <FaCartShopping className="w-8 min-w-8" />
 
           <p className="absolute right-[-5px] bottom-[-5px] w-4 h-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[10px] flex items-center justify-center z-10">
-            10
+            {getCartCount()}
           </p>
         </Link>
 
