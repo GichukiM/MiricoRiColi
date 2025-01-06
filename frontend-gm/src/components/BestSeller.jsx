@@ -12,10 +12,6 @@ const BestSeller = () => {
     setBestSellers(bestProduct);
   }, [products]);
 
-  console.log(products);
-
-  console.log(bestSellers);
-
   return (
     <div className="my-10">
       <div className="text-center text-3xl py-8">
