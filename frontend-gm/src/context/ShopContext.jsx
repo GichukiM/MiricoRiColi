@@ -1,24 +1,31 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
-import { products } from "../assets/assets.js";
+import { createContext, useEffect, useState } from "react";
+// import { products } from "../assets/assets.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const ShopContext = createContext();
 
 const ShopContextProvider = (props) => {
   const currency = "KES";
   const delivery_fee = 100;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
   const addToCart = async (itemId, size) => {
-    if (!size) {
-      toast.error("Select product size!");
-      return;
-    }
+    // Get product details (e.g., from your database or state)
+  const product = products.find((item) => item._id === itemId);
+
+  // Check if the product is in the "Shoes" category and requires size
+  if (product.category === "Shoes" && !size) {
+    toast.error("Select product size!");
+    return;
+  }
 
     let cartData = structuredClone(cartItems);
 
@@ -60,7 +67,7 @@ const ShopContextProvider = (props) => {
     setCartItems(cartData);
   };
 
-  const getCartAmount =  () => {
+  const getCartAmount = () => {
     let totalAmount = 0;
 
     for (const items in cartItems) {
@@ -75,12 +82,32 @@ const ShopContextProvider = (props) => {
           console.log(error);
         }
       }
-
-      return totalAmount;
     }
 
     return totalAmount;
   };
+
+  const getProductData = async () => {
+    try {
+      
+      const response = await axios.get(backendUrl + '/api/products/list');
+      if(response.status === 200) {
+        setProducts(response.data.products);
+        console.log(response.data.products);
+        
+      } else {
+        toast.error(response.data.message);
+      };
+
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  }
+
+  useEffect(() => {
+    getProductData();
+  })
 
   const values = {
     products,
@@ -95,7 +122,7 @@ const ShopContextProvider = (props) => {
     getCartCount,
     updateQuantity,
     getCartAmount,
-    navigate,
+    navigate, backendUrl, 
   };
 
   return (

@@ -103,18 +103,7 @@ const Product = () => {
           <p className="border px-5 py-3 text-sm">Reviews</p>
         </div>
         <div className="flex flex-col gap-4 py-6 border px-6 text-sm text-gray-500">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-            voluptate et quasi maxime dolores, libero aperiam commodi corrupti
-            facilis perspiciatis quas nisi adipisci doloribus maiores
-            consectetur harum sed non mollitia?
-          </p>
-          <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Optio sint
-            aspernatur officiis ab labore omnis vel placeat illo, odit ipsam
-            culpa tenetur suscipit nemo nobis animi voluptate recusandae esse
-            mollitia?
-          </p>
+        {productData.description}
         </div>
       </div>
 

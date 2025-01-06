@@ -9,7 +9,7 @@ const NewProducts = () => {
 
   useEffect(() => {
     setLatestProducts(products.slice(0, 10));
-  }, []);
+  }, [products]);
 
   console.log(latestProducts[0]);
 

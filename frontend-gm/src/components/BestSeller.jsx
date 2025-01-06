@@ -10,7 +10,7 @@ const BestSeller = () => {
   useEffect(() => {
     const bestProduct = products.filter((item) => item.bestSeller);
     setBestSellers(bestProduct);
-  }, []);
+  }, [products]);
 
   console.log(products);
 
@@ -33,6 +33,7 @@ const BestSeller = () => {
             id={item._id}
             name={item.name}
             image={item.image}
+            price={item.price}
           />
         ))}
       </div>
