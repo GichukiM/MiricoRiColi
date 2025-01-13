@@ -8,7 +8,7 @@ const NewProducts = () => {
   const [latestProducts, setLatestProducts] = useState([]);
 
   useEffect(() => {
-    setLatestProducts(products.slice(0, 10));
+    setLatestProducts(products.slice(0, 5));
   }, [products]);
 
 
@@ -17,8 +17,7 @@ const NewProducts = () => {
       <div className="text-center py-8 text-3xl">
         <Title text1={`FEATURED NEW `} text2={`PRODUCTS`} />
         <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
-          earum.
+        Explore Our Curated Selection of Fresh Arrivals. Crafted for Excellence, Designed for the Modern Gentleman.
         </p>
       </div>
 

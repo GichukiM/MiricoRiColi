@@ -16,6 +16,7 @@ import SearchBar from "./components/SearchBar";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={<MyProfile />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/place-order" element={<PlaceOrder />} />
             <Route path="*" element={<PageNotFound />} />

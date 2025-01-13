@@ -15,7 +15,7 @@ const Contact = () => {
         <div className="flex flex-col justify-center items-start gap-6">
           <p className="font-semibold text-xl text-gray-600">Our Store</p>
           <p className="text-gray-500">
-            8928 Gichuki Lane <br /> Suite 123, Nanyuki, Kenya{" "}
+          236 Harambee Hse <br /> strt 5, Nairobi. {" "}
           </p>
           <p className="text-gray-500">
             {" "}
@@ -25,7 +25,7 @@ const Contact = () => {
             Careers at Mirico Ri Coli
           </p>
           <p className="text-gray-500">
-            Lorem ipsum dolor sit amet consectetur.
+          Join our team and be a part of something special. Explore exciting opportunities with a brand that values craftsmanship, style, and innovation.
           </p>
           <button className="border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500">
             Explore Jobs

@@ -1,59 +1,49 @@
-// import React from 'react'
-
 import { useContext, useState, useEffect } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { IoMdArrowDropdown } from "react-icons/io";
 import Title from "../components/Title";
 import ProductItem from "../components/ProductItem";
+import { useLocation } from "react-router-dom"; // Import useLocation to read query params
 
 const Collection = () => {
   const { products, search, showSearch } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [accessories, setAccessories] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
 
-  const toggleCategory = (e) => {
-    if (category.includes(e.target.value)) {
-      setCategory((prev) => prev.filter((item) => item !== e.target.value));
+  const location = useLocation();
+
+  // Function to handle checkbox toggling of subcategories
+  const togglesubCategory = (e) => {
+    const value = e.target.value;
+    if (subCategory.includes(value)) {
+      setSubCategory((prev) => prev.filter((item) => item !== value));
     } else {
-      setCategory((prev) => [...prev, e.target.value]);
+      setSubCategory((prev) => [...prev, value]);
     }
   };
 
-  const toggleAccessories = (e) => {
-    if (accessories.includes(e.target.value)) {
-      setAccessories((prev) => prev.filter((item) => item !== e.target.value));
-    } else {
-      setAccessories((prev) => [...prev, e.target.value]);
-    }
-  };
-
+  // Function to apply the filter based on subcategories and search text
   const applyFilter = () => {
     let productsCopy = products.slice();
 
-    if (showSearch && search ) {
+    if (showSearch && search) {
       productsCopy = productsCopy.filter((item) =>
         item.name.toLowerCase().includes(search.toLowerCase())
       );
     }
 
-    if (category.length > 0) {
+    if (subCategory.length > 0) {
       productsCopy = productsCopy.filter((item) =>
-        category.includes(item.category)
-      );
-    }
-
-    if (accessories.length > 0) {
-      productsCopy = productsCopy.filter((item) =>
-        accessories.includes(item.accessories)
+        subCategory.includes(item.subCategory)
       );
     }
 
     setFilterProducts(productsCopy);
   };
 
+  // Function to sort products based on price or relevance
   const sortProduct = () => {
     let fpCopy = filterProducts.slice();
 
@@ -70,13 +60,25 @@ const Collection = () => {
     }
   };
 
+  // Effect hook to apply filters based on subCategory changes
   useEffect(() => {
     applyFilter();
-  }, [category, accessories, search, showSearch, products]);
+  }, [subCategory, search, showSearch, products]);
 
+  // Effect hook to handle sorting logic
   useEffect(() => {
     sortProduct();
-  }, [sortType])
+  }, [sortType, products]);
+
+  // Effect hook to handle query params for subCategory
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const subCategoryParam = queryParams.get("subCategory");
+
+    if (subCategoryParam) {
+      setSubCategory(subCategoryParam.split(","));
+    }
+  }, [location.search]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
@@ -103,7 +105,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Oxford"}
-                onChange={toggleCategory}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Oxford")}
               />
               Oxford
             </p>
@@ -112,7 +115,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Derbies"}
-                onChange={toggleCategory}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Derbies")}
               />
               Derbies
             </p>
@@ -121,7 +125,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Monk Straps"}
-                onChange={toggleCategory}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Monk Straps")}
               />
               Monk Straps
             </p>
@@ -130,7 +135,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Loafers"}
-                onChange={toggleCategory}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Loafers")}
               />
               Loafers
             </p>
@@ -139,7 +145,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Boots"}
-                onChange={toggleCategory}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Boots")}
               />
               Boots
             </p>
@@ -158,7 +165,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Belts"}
-                onChange={toggleAccessories}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Belts")}
               />
               Belts
             </p>
@@ -167,7 +175,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Wallets"}
-                onChange={toggleAccessories}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Wallets")}
               />
               Wallets
             </p>
@@ -176,7 +185,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Gloves"}
-                onChange={toggleAccessories}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Gloves")}
               />
               Gloves
             </p>
@@ -185,7 +195,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Bags"}
-                onChange={toggleAccessories}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Bags")}
               />
               Bags
             </p>
@@ -194,7 +205,8 @@ const Collection = () => {
                 type="checkbox"
                 className="flex gap-2"
                 value={"Shoe Care Products"}
-                onChange={toggleAccessories}
+                onChange={togglesubCategory}
+                checked={subCategory.includes("Shoe Care Products")}
               />
               Shoe Care Products
             </p>

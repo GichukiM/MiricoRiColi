@@ -1,30 +1,36 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import RelatedProducts from "../components/RelatedProducts";
 
 const Product = () => {
   const { productId } = useParams();
-
   const { products, currency, addToCart } = useContext(ShopContext);
-  const [productData, setProductData] = useState(false);
+  const [productData, setProductData] = useState(null);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
 
+  const navigate = useNavigate();
+
   const fetchProductData = async () => {
-    products.map((item) => {
-      if (item._id === productId) {
-        setProductData(item);
-        setImage(item.image[0]);
-        return null;
+    const product = products.find((item) => item._id === productId);
+    if (product) {
+      setProductData(product);
+      if (!image) {
+        setImage(product.image[0]);
       }
-    });
+    }
   };
 
   useEffect(() => {
     fetchProductData();
   }, [productId, products]);
+
+  const handleRelatedProductClick = (relatedProductId) => {
+    setProductData(null);
+    navigate(`/product/${relatedProductId}`); // Navigate to the clicked product
+  };
 
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
@@ -38,15 +44,17 @@ const Product = () => {
                 key={index}
                 src={item}
                 alt={productData.name}
-                onClick={() => setImage(item)}
-                className="w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer"
+                onClick={() => setImage(item)} // Update image when clicked
+                className={`w-[24%] sm:w-full sm:mb-3 flex-shrink-0 cursor-pointer ${
+                  image === item ? "border-2 border-black" : ""
+                }`}
               />
             ))}
           </div>
 
           {/* Main Product Image */}
           <div className="w-full sm:w-[80%]">
-            <img className="w-full h-auto" src={image} alt="" />
+            <img className="w-full h-auto" src={image} alt="Product" />
           </div>
         </div>
 
@@ -83,7 +91,10 @@ const Product = () => {
                 </button>
               ))}
             </div>
-            <button onClick={() => addToCart(productData._id, size)} className="bg-black w-fit px-8 text-white py-3 text-sm active:bg-gray-700">
+            <button
+              onClick={() => addToCart(productData._id, size)}
+              className="bg-black w-fit px-8 text-white py-3 text-sm active:bg-gray-700"
+            >
               ADD TO CART
             </button>
             <hr className="mt-8 sm:w-4/5" />
@@ -103,7 +114,7 @@ const Product = () => {
           <p className="border px-5 py-3 text-sm">Reviews</p>
         </div>
         <div className="flex flex-col gap-4 py-6 border px-6 text-sm text-gray-500">
-        {productData.description}
+          {productData.description}
         </div>
       </div>
 
@@ -112,6 +123,7 @@ const Product = () => {
         <RelatedProducts
           category={productData.category}
           subCategory={productData.subCategory}
+          onRelatedProductClick={handleRelatedProductClick}
         />
       </div>
     </div>
