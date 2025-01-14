@@ -1,11 +1,16 @@
-// import React from 'react'
-
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 
 const CartTotal = () => {
-  const { currency, getCartAmount, delivery_fee } = useContext(ShopContext);
+  const { currency, getCartAmount } = useContext(ShopContext);
+
+  // Define delivery fee constants
+  const deliveryFee = 250;
+  const freeDeliveryThreshold = 25000;
+
+  // Calculate the effective delivery fee based on cart amount
+  const effectiveDeliveryFee = getCartAmount() > freeDeliveryThreshold ? 0 : deliveryFee;
 
   return (
     <div className="w-full">
@@ -24,7 +29,7 @@ const CartTotal = () => {
         <div className="flex justify-between">
           <p>Shipping Fee</p>
           <p>
-            {currency} {delivery_fee}.00
+            {currency} {effectiveDeliveryFee}.00
           </p>
         </div>
         <hr />
@@ -32,7 +37,7 @@ const CartTotal = () => {
           <b>Total</b>
           <b>
             {currency}{" "}
-            {getCartAmount === 0 ? 0 : getCartAmount() + delivery_fee}.00
+            {getCartAmount() === 0 ? 0 : getCartAmount() + effectiveDeliveryFee}.00
           </b>
         </div>
       </div>

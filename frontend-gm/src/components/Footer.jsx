@@ -34,7 +34,7 @@ const Footer = () => {
             <div>
                 <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
                 <ul className="flex flex-col gap-1 text-gray-600">
-                    <li>+254 712345765</li>
+                    <li>(254) 723-334-555</li>
                     <li>info@miricoricoli.com</li>
                 </ul>
                 <div className="flex gap-2 mt-5">
@@ -51,7 +51,7 @@ const Footer = () => {
             <div className="flex flex-col gap-1 text-gray-600">
 
                 <hr />
-                <p className="py-5 text-sm text-center">All rights reserved 2025 &copy Mirico Ri Coli - All rights reserved.</p>
+                <p className="py-5 text-sm text-center">All rights reserved 2025 &copy; Mirico Ri Coli - All rights reserved.</p>
 
         </div>
 
